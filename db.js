@@ -13,9 +13,5 @@ const client = new Client({
 
 client.connect(); 
 
-client.query("select * from users", (err, res) => {
-
-    return console.log(res.rows)
-})
 
 module.exports = client;

@@ -1,13 +1,36 @@
 const router = require("express").Router();
+const Users = require("../models/users"); 
+
+// middlewares
+
+const { checkPayload } = require("../middlewares/users")
 
 
 router.get("/users", async (req, res) => {
 
     try {
-        res.status(200).json("This is working")
+        const users = await Users.getAllUsers(); 
+
+        res.status(200).send(users.rows)
     } catch (error) {
-        res.status(500).json("There was an error")
+
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
     }
 })
+
+
+
+router.post("/users", [checkPayload], async (req, res) => {
+
+    try {
+        const newUser = await Users.addUser(req.payload)
+
+        res.status(200).send(newUser.rows)
+    } catch (error) {
+
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+    }
+})
+
 
 module.exports = router; 
