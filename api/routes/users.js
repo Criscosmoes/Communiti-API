@@ -19,6 +19,25 @@ router.get("/users", async (req, res) => {
 })
 
 
+router.get("/users/:id", async (req, res) => {
+
+    const { id } = req.params; 
+
+    console.log(id)
+
+    try {
+        
+        const user = await Users.getByOauthId(id); 
+
+        res.status(200).send(user.rows); 
+
+    } catch (error) {
+        
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail })
+    }
+})
+
+
 
 router.post("/users", [checkPayload], async (req, res) => {
 
