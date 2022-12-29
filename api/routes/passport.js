@@ -17,6 +17,8 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser( async (id, done) => {
 
+  console.log(id)
+
   try {
 
     const user = await Users.getByOauthId(id);
@@ -77,20 +79,27 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google"), (req, res) => {
 
-    res.redirect("/")
+    res.redirect("http://localhost:3000")
   }
 ); // this now uses the google strategy call back URL up above
 
 router.get("/api/logout", async (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err); }
-        res.redirect('/');
+        req.session.destroy(); 
+        res.redirect('http://localhost:3000');
       });
 });
 
 router.get("/api/current_user", (req, res) => {
 
-  res.send(req.user);
+  try {
+   
+    res.send(req.user)
+
+  } catch (error) {
+    res.send(error)
+  }
 });
 
 module.exports = router;
