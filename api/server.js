@@ -3,6 +3,10 @@ const cors = require("cors");
 const helmet = require("helmet");
 const passport = require("passport");
 const session = require("express-session")
+const dotenv = require('dotenv')
+
+dotenv.config(); 
+
 
 
 // routes
@@ -15,7 +19,7 @@ const PassportRouter = require("./routes/passport");
 const server = express();
 
 server.use(session({
-    secret: "secret", 
+    secret: process.env.COOKIE_SECRET, 
     resave: false, 
     saveUninitialized: true, 
     cookie: {maxAge: 1000 * 60 * 60 * 24}

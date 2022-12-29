@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy; 
+const dotenv = require('dotenv')
+
+dotenv.config(); 
+
 
 //user model
 const Users = require("../models/users")
@@ -85,6 +89,7 @@ router.get("/api/logout", async (req, res, next) => {
 });
 
 router.get("/api/current_user", (req, res) => {
+
   res.send(req.user);
 });
 
