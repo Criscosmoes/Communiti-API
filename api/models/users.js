@@ -7,6 +7,14 @@ const getAllUsers = () => {
     return users; 
 }
 
+const getByOauthId = (id) => {
+
+    const user = pool.query(`select * from users where oauth_id ='${id}'`)
+
+    return user; 
+
+}
+
 const addUser = (user) => {
 
     const { username, oauth_id } = user; 
@@ -18,5 +26,6 @@ const addUser = (user) => {
 
 module.exports = {
     getAllUsers,
-    addUser
+    addUser,
+    getByOauthId
 }
