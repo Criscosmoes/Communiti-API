@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Users = require("../models/users"); 
+const Users = require("../queries/users"); 
 
 // middlewares
 
@@ -22,8 +22,6 @@ router.get("/users", async (req, res) => {
 router.get("/users/:id", async (req, res) => {
 
     const { id } = req.params; 
-
-    console.log(id)
 
     try {
         

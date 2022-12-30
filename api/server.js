@@ -7,6 +7,8 @@ const dotenv = require('dotenv')
 
 dotenv.config();
 
+
+// pg sessoin db
 const pg = require('pg');
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
@@ -25,19 +27,11 @@ const pgPool = new pg.Pool({
 
 const UserRouter = require("./routes/users")
 const PassportRouter = require("./routes/passport"); 
-
-
+const CommunitiesRouter = require("./routes/communities")
 
 
 const server = express();
 
-server.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-      credentials: true,
-    })
-);
 
 server.use(expressSession({
     store: new pgSession({
@@ -49,19 +43,6 @@ server.use(expressSession({
     saveUninitialized: true, 
     cookie: { sameSite: false, httpOnly: true, secure: false, maxAge: 1 * 24 * 60 * 60 * 1000 } // 1 days
 }));
-
-server.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", req.header('Origin'));
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
-  });
-
-
 
 
 // middleware
@@ -75,6 +56,7 @@ server.use(express.json());
 
 // after middleware
 server.use("/api", UserRouter);
+server.use("/api", CommunitiesRouter)
 
 // passport
 server.use(PassportRouter);

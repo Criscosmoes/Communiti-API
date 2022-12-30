@@ -7,7 +7,7 @@ dotenv.config();
 
 
 //user model
-const Users = require("../models/users")
+const Users = require("../queries/users")
 
 passport.serializeUser((user, done) => {
 
@@ -17,7 +17,6 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser( async (id, done) => {
 
-  console.log(id)
 
   try {
 
@@ -53,7 +52,6 @@ passport.use(
 
             done(null, newUser); 
 
-            console.log(newUser)
         }
         else {
             
