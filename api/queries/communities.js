@@ -14,7 +14,15 @@ const addCommunity = (community) => {
 
     const newCommunity = pool.query(`insert into communities (community_name, image, description, created_on) values ('${community_name}', '${image}', '${description}', CURRENT_TIMESTAMP) returning community_id, community_name, image, description, followers, created_on`)
 
-    return newCommunity
+    return newCommunity;
 }
 
-module.exports = { getAllCommuinties, addCommunity }
+const getRecentlyAddedCommunities = () => {
+
+    const communities = pool.query("select * from communities order by created_on asc limit 5")
+
+    return communities;
+
+}
+
+module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities }
