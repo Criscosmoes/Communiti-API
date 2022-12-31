@@ -25,4 +25,12 @@ const getRecentlyAddedCommunities = () => {
 
 }
 
-module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities }
+const getPopularCommunities = () => {
+
+    const communities = pool.query("select * from communities order by followers desc limit 5")
+
+    return communities;
+
+}
+
+module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities }

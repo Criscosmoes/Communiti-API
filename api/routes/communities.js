@@ -42,6 +42,22 @@ router.get("/recent_communities", async (req, res) => {
     }
 })
 
+router.get("/popular_communities", async (req, res) => {
+
+    try {
+
+        
+        const communities = await Communities.getPopularCommunities(); 
+
+        res.status(200).send(communities.rows); 
+
+    } catch (error) {
+
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+        
+    }
+})
+
 router.post("/communities", [mpUpload], async (req, res) => {
 
     try {
