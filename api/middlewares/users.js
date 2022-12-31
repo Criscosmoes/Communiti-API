@@ -8,8 +8,6 @@ const checkPayload = async (req, res, next) => {
           .send("Please provide a username and oauth id.");
       }
   
-      req.payload = req.body;
-  
       next();
     } catch (error) {
       res.status(500).send({ ERROR: error.message, DETAIL: error.detail });

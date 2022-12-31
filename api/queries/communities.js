@@ -11,9 +11,8 @@ const addCommunity = (community) => {
 
     const { community_name, image, description } = community; 
 
-    console.log(community, "community")
 
-    const newCommunity = pool.query(`insert into communities (community_name, image, description) values ('${community_name}', '${image}', '${description}') returning community_id, community_name, image, description, followers`)
+    const newCommunity = pool.query(`insert into communities (community_name, image, description, created_on) values ('${community_name}', '${image}', '${description}', CURRENT_TIMESTAMP) returning community_id, community_name, image, description, followers, created_on`)
 
     return newCommunity
 }

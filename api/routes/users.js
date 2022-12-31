@@ -40,7 +40,7 @@ router.get("/users/:id", async (req, res) => {
 router.post("/users", [checkPayload], async (req, res) => {
 
     try {
-        const newUser = await Users.addUser(req.payload)
+        const newUser = await Users.addUser(req.body)
 
         res.status(200).send(newUser.rows)
     } catch (error) {
