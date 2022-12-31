@@ -25,6 +25,15 @@ const getRecentlyAddedCommunities = () => {
 
 }
 
+const getCommunitiesByTerm = (term) => {
+
+    const communities = pool.query(`select * from communities where community_name ilike '%${term}%' limit 10 `); 
+
+    return communities; 
+
+        
+}
+
 const getPopularCommunities = () => {
 
     const communities = pool.query("select * from communities order by followers desc limit 5")
@@ -33,4 +42,4 @@ const getPopularCommunities = () => {
 
 }
 
-module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities }
+module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities, getCommunitiesByTerm }
