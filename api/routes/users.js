@@ -18,6 +18,18 @@ router.get("/users", async (req, res) => {
     }
 })
 
+router.get("/recent_users", async (req, res) => {
+
+    try {
+        const users = await Users.getRecentUsers(); 
+
+        res.status(200).send(users.rows)
+    } catch (error) {
+
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+    }
+})
+
 
 router.get("/users/:id", async (req, res) => {
 
