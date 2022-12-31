@@ -7,6 +7,14 @@ const getAllUsers = () => {
     return users; 
 }
 
+const getRecentUsers = () => {
+
+    const users = pool.query("select * from users order by created_on asc limit 5"); 
+
+    return users; 
+}
+
+
 const getByOauthId = (id) => {
 
     const user = pool.query(`select * from users where oauth_id ='${id}'`)
@@ -21,7 +29,7 @@ const addUser = (user) => {
     
     console.log(user)
 
-    const newUser = pool.query(`insert into users (username, oauth_id, image) values ('${username}', '${oauth_id}', '${image}') returning user_id, username, oauth_id, image`)
+    const newUser = pool.query(`insert into users (username, oauth_id, image, created_on) values ('${username}', '${oauth_id}', '${image}', CURRENT_TIMESTAMP) returning user_id, username, oauth_id, image, created_on`)
 
     return newUser; 
 }
@@ -29,5 +37,6 @@ const addUser = (user) => {
 module.exports = {
     getAllUsers,
     addUser,
-    getByOauthId
+    getByOauthId, 
+    getRecentUsers
 }
