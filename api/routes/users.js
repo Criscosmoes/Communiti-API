@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Users = require("../models/users"); 
+const Users = require("../queries/users"); 
 
 // middlewares
 
@@ -23,8 +23,6 @@ router.get("/users/:id", async (req, res) => {
 
     const { id } = req.params; 
 
-    console.log(id)
-
     try {
         
         const user = await Users.getByOauthId(id); 
@@ -42,7 +40,7 @@ router.get("/users/:id", async (req, res) => {
 router.post("/users", [checkPayload], async (req, res) => {
 
     try {
-        const newUser = await Users.addUser(req.payload)
+        const newUser = await Users.addUser(req.body)
 
         res.status(200).send(newUser.rows)
     } catch (error) {

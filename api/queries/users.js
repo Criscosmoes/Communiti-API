@@ -17,9 +17,11 @@ const getByOauthId = (id) => {
 
 const addUser = (user) => {
 
-    const { username, oauth_id } = user; 
+    const { username, oauth_id, image } = user;
+    
+    console.log(user)
 
-    const newUser = pool.query(`insert into users (username, oauth_id) values ('${username}', '${oauth_id}') returning user_id, username, oauth_id`)
+    const newUser = pool.query(`insert into users (username, oauth_id, image) values ('${username}', '${oauth_id}', '${image}') returning user_id, username, oauth_id, image`)
 
     return newUser; 
 }

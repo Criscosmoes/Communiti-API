@@ -7,7 +7,7 @@ dotenv.config();
 
 
 //user model
-const Users = require("../models/users")
+const Users = require("../queries/users")
 
 passport.serializeUser((user, done) => {
 
@@ -17,7 +17,6 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser( async (id, done) => {
 
-  console.log(id)
 
   try {
 
@@ -42,6 +41,9 @@ passport.use(
       // this links up with server.get("/auth/google/callback")
     },
     async (accessToken, refreshToken, profile, done) => {
+
+      console.log(profile.photos[0].value)
+
       try {
        
         const userTaken = await Users.getByOauthId(profile.id)
@@ -49,11 +51,10 @@ passport.use(
 
         if (userTaken.rows.length === 0) {
 
-            const newUser = await Users.addUser({username: profile.name.givenName, oauth_id: profile.id})
+            const newUser = await Users.addUser({username: profile.name.givenName, oauth_id: profile.id, image: profile.photos[0].value})
 
             done(null, newUser); 
 
-            console.log(newUser)
         }
         else {
             
