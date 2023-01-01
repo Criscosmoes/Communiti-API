@@ -8,8 +8,8 @@ const uploadImageS3 = async ([file]) => {
     const s3 = new S3 ({
         region: process.env.AWS_BUCKET_REGION, 
         credentials: {
-            accessKeyId: "AKIASVKYMP4Q6MFBSQVT", 
-            secretAccessKey: "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"
+            accessKeyId: process.env.AWS_S3_ACCESS_KEY, 
+            secretAccessKey: process.env.AWS_S3_SECRET_KEY
         }
     })
     
