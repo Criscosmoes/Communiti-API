@@ -74,6 +74,22 @@ router.get("/communities/:term", async (req, res) => {
 
 })
 
+router.get("/communities/id/:id", async (req, res) => {
+
+    try {
+
+        const { id } = req.params; 
+
+        const community = await Communities.getCommunityById(id); 
+
+        res.status(200).send(community)
+        
+    } catch (error) {
+        
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+    }
+})
+
 router.post("/communities", [mpUpload], async (req, res) => {
 
     try {
