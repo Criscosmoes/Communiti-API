@@ -34,6 +34,13 @@ const getCommunitiesByTerm = (term) => {
         
 }
 
+const getCommunityById = async (id) => {
+
+    const community = await pool.query(`select row_to_json(t) from (select * from communities where community_id = $1) t`, [id])
+
+    return community.rows[0]["row_to_json"]
+}
+
 const getPopularCommunities = () => {
 
     const communities = pool.query("select * from communities order by followers desc limit 5")
@@ -42,4 +49,4 @@ const getPopularCommunities = () => {
 
 }
 
-module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities, getCommunitiesByTerm }
+module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities, getCommunitiesByTerm, getCommunityById }

@@ -6,6 +6,21 @@ const Users = require("../queries/users");
 const { checkPayload } = require("../middlewares/users")
 
 
+router.get("/users/user/:id", async (req, res) => {
+
+    try {
+
+        const { id } = req.params; 
+
+        const user = await Users.getUserByOauthId(id);
+
+        res.status(200).send(user); 
+    } catch (error) {
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+        
+    }
+})
+
 router.get("/users", async (req, res) => {
 
     try {

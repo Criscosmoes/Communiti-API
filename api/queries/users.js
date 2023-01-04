@@ -1,5 +1,12 @@
 const pool = require("../../db"); 
 
+const getUserByOauthId = async (id) => {
+
+    const user = await pool.query("select * from users where oauth_id = $1", [id])
+
+    return user.rows[0]; 
+}
+
 const getAllUsers = () => {
 
     const users = pool.query("select * from users"); 
@@ -27,7 +34,6 @@ const addUser = (user) => {
 
     const { username, oauth_id, image } = user;
     
-    console.log(user)
 
     const newUser = pool.query(`insert into users (username, oauth_id, image, created_on) values ('${username}', '${oauth_id}', '${image}', CURRENT_TIMESTAMP) returning user_id, username, oauth_id, image, created_on`)
 
@@ -38,5 +44,6 @@ module.exports = {
     getAllUsers,
     addUser,
     getByOauthId, 
-    getRecentUsers
+    getRecentUsers,
+    getUserByOauthId
 }
