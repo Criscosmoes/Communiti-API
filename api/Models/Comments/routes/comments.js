@@ -35,6 +35,20 @@ router.get("/comments/postId/:id", async (req, res) => {
 
 })
 
+router.delete("/comments/delete/:id", async (req, res) => {
+
+    try {
+        const { id } = req.params; 
+
+        await Comment.deleteComment(id); 
+
+        res.status(200).send("Successfully deleted comment")
+    } catch (error) {
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+        
+    }
+})
+
 
 
 
