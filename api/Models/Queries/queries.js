@@ -18,7 +18,14 @@ const getPostsByCommunityId = async (id) => {
     return posts.rows; 
 }
 
+const deletePost = async (id) => {
+
+    await pool.query("delete from posts where post_id = $1", [id])
+
+}
+
 module.exports = {
     addPost, 
-    getPostsByCommunityId
+    getPostsByCommunityId, 
+    deletePost
 }

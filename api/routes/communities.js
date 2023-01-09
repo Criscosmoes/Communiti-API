@@ -94,14 +94,12 @@ router.post("/communities", [mpUpload], async (req, res) => {
 
     try {
 
-        console.log(req.files, req.body)
-
         const s3Object = await uploadImageS3(req.files.image)
 
 
         const newCommunity = await Communities.addCommunity({...req.body, image: s3Object.Location})
 
-        res.status(200).send(newCommunity.rows)
+        res.status(200).send(newCommunity.rows[0])
 
 
     } catch (error) {

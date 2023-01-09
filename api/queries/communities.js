@@ -9,10 +9,10 @@ const getAllCommuinties = () => {
 
 const addCommunity = (community) => {
 
-    const { community_name, image, description } = community; 
+    const { community_name, image, description, caption } = community; 
 
 
-    const newCommunity = pool.query(`insert into communities (community_name, image, description, created_on) values ('${community_name}', '${image}', '${description}', CURRENT_TIMESTAMP) returning community_id, community_name, image, description, followers, created_on`)
+    const newCommunity = pool.query(`insert into communities (community_name, image, caption, description, created_on) values ('${community_name}', '${image}', '${caption}', '${description}', timezone('US/Pacific', current_timestamp)) returning *`)
 
     return newCommunity;
 }
