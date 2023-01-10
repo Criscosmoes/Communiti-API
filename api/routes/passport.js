@@ -42,7 +42,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
 
-      console.log(profile.photos[0].value)
 
       try {
        
