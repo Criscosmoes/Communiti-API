@@ -7,6 +7,13 @@ const getAllCommuinties = () => {
     return communities; 
 }
 
+const getCommunitiesByUserId = async (id) => {
+
+    const communities = await pool.query(`select c. *, case when f.user_id is null then false else true end as following from communities c left join user_communities f on c.community_id = f.community_id and f.user_id = $1 order by following desc`, [id])
+
+    return communities.rows; 
+}
+
 const addCommunity = (community) => {
 
     const { community_name, image, description, caption } = community; 
@@ -34,11 +41,13 @@ const getCommunitiesByTerm = (term) => {
         
 }
 
-const getCommunityById = async (id) => {
+const getCommunityById = async (userCommunity) => {
 
-    const community = await pool.query(`select row_to_json(t) from (select * from communities where community_id = $1) t`, [id])
+    const { user_id, community_id } = userCommunity; 
 
-    return community.rows[0]["row_to_json"]
+    const community = await pool.query(`select c.*, (case when exists (select 1 from user_communities uc where uc.community_id = c.community_id and uc.user_id = $1) then true else false end) as following from communities c where c.community_id = $2`, [user_id, community_id])
+
+    return community.rows[0]
 }
 
 const getPopularCommunities = () => {
@@ -49,4 +58,4 @@ const getPopularCommunities = () => {
 
 }
 
-module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities, getCommunitiesByTerm, getCommunityById }
+module.exports = { getAllCommuinties, addCommunity, getRecentlyAddedCommunities, getPopularCommunities, getCommunitiesByTerm, getCommunityById, getCommunitiesByUserId}

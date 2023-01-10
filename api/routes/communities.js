@@ -26,6 +26,23 @@ router.get("/communities", async (req, res) => {
     }
 })
 
+router.get('/communities/userId/:id', async (req, res) => {
+
+    try {
+
+        const { id } = req.params; 
+
+        const communities = await Communities.getCommunitiesByUserId(id);
+
+        res.status(200).send(communities); 
+        
+    } catch (error) {
+        
+        res.status(500).send({ ERROR: error.message, DETAIL: error.detail });
+
+    }
+})
+
 router.get("/recent_communities", async (req, res) => {
 
     try {
@@ -74,13 +91,11 @@ router.get("/communities/:term", async (req, res) => {
 
 })
 
-router.get("/communities/id/:id", async (req, res) => {
+router.post("/communities/community/id", async (req, res) => {
 
     try {
 
-        const { id } = req.params; 
-
-        const community = await Communities.getCommunityById(id); 
+        const community = await Communities.getCommunityById(req.body); 
 
         res.status(200).send(community)
         

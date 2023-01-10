@@ -30,6 +30,7 @@ const PassportRouter = require("./routes/passport");
 const CommunitiesRouter = require("./routes/communities")
 const PostsRouter = require("./Models/Posts/routes/posts")
 const CommentsRouter = require("./Models/Comments/routes/comments")
+const FollowRouter = require("./Models/Follow/routes/follow")
 
 
 const server = express();
@@ -61,6 +62,7 @@ server.use("/api", UserRouter);
 server.use("/api", CommunitiesRouter)
 server.use("/api", PostsRouter)
 server.use("/api", CommentsRouter)
+server.use("/api", FollowRouter)
 
 // passport
 server.use(PassportRouter);
